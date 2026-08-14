@@ -100,7 +100,11 @@ npm test         # 构建后跑单元测试
 `tools/verify-driver/` 是仓库内的验收工具（不随包发布）：它把一条 slash 命令通过真正的
 `commands.execute` 接缝跑完一整轮，用来做端到端验证。
 
+它需要先装进目标 profile 才能用 `--patch` 挂载：
+
 ```bash
+cd tools/verify-driver && npm install && cd ../..
+dsh plugin --profile <你的 profile> add ./tools/verify-driver
 dsh --profile <你的 profile> --patch tools/verify-driver/patch.yml "/simplify"
 ```
 
@@ -164,4 +168,6 @@ dsh plugin --profile <your-profile> add ../dsh-simplify
 MIT. Upstream [`pi-simplify`](https://github.com/MattDevy/pi-extensions/tree/main/packages/pi-simplify)
 `Copyright (c) 2026 Matt Devy`; this port `Copyright (c) 2026 GongYuanCaiJi`. See [LICENSE](./LICENSE).
 
-Thanks to the authors of [MattDevy/pi-extensions](https://github.com/MattDevy/pi-extensions).
+Thanks to the authors of [MattDevy/pi-extensions](https://github.com/MattDevy/pi-extensions) —
+if this plugin is useful to you, **please also star the
+[upstream repository](https://github.com/MattDevy/pi-extensions)**.
