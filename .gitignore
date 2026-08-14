@@ -1,0 +1,4 @@
+.upstream/
+node_modules/
+dist/
+.serena/

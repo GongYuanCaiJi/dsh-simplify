@@ -1,0 +1,8 @@
+# Overlay that mounts the verify-driver into a profile:
+#   dsh --profile verify --patch tools/verify-driver/patch.yml ["/simplify ..."]
+- insert:
+    - id: verify-driver-startup
+      name: dsh-simplify-verify-driver/startup
+    - id: verify-driver-runner
+      name: dsh-simplify-verify-driver
+      inject: [verifyDriverStartup]

@@ -1,0 +1,68 @@
+{
+  "name": "dsh-simplify",
+  "version": "0.1.0",
+  "description": "DeepSeek Harness 插件：审查最近改动的代码，就清晰度、一致性与可维护性提出改进（移植自 pi-simplify）",
+  "type": "module",
+  "license": "MIT",
+  "author": "GongYuanCaiJi",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GongYuanCaiJi/dsh-simplify.git"
+  },
+  "homepage": "https://github.com/GongYuanCaiJi/dsh-simplify#readme",
+  "bugs": {
+    "url": "https://github.com/GongYuanCaiJi/dsh-simplify/issues"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsh",
+    "code-review",
+    "simplify",
+    "refactor",
+    "ai",
+    "llm",
+    "ai-agent",
+    "coding-assistant",
+    "developer-tools"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "dist",
+    "src",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test test/exec.test.mjs",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build && npm run typecheck",
+    "prepack": "test -d dist || { echo 'Error: dist/ missing. Run npm run build first.' && exit 1; }"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-llm": "^0.1.0-rc.6"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-agent": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-commands": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-llm": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-shell": "^0.1.0-rc.6",
+    "@types/node": "^25.9.1",
+    "typescript": "^6.0.3"
+  }
+}

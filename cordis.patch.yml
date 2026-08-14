@@ -1,0 +1,4 @@
+- insert:
+    - id: cmd-simplify
+      name: 'dsh-simplify'
+      config: {}
