@@ -79,6 +79,9 @@ dsh plugin --profile <你的 profile> add ../dsh-simplify
 逐字保留，`cmp` 验证一致：`src/types.ts`、`src/prompt-builder.ts`（含提示词全文）、
 以及 `src/git-diff.ts` 的 `STATUS_MAP` / `parseDiffOutput` / `parseChangedLines` / `diffArgs`。
 
+**这一点你可以自己验，不必信我们** —— [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)
+钉住了上游 tarball 的 integrity / shasum / gitHead 与逐字文件的 SHA-256，附可直接复制的比对命令。
+
 六处适配（dsh 与 Pi 的 API 不同）：入口改为 Cordis namespace 形状；命令改注册到 `commands` 服务；
 工作目录取自 `agent.session.header.cwd`；「无改动」提示改为命令回传值；
 `pi.exec` 改走 `ctx.shell`（薄转接层，调用端零改动）；提示词改用 `agent.followup` 送出。
@@ -133,7 +136,18 @@ git-diff parsing are kept byte-identical; only the dsh API seams are adapted.
 ## 📦 Install
 
 ```bash
-dsh plugin --profile <your-profile> add dsh-simplify
+dsh plugin --profile <your-profile> add github:GongYuanCaiJi/dsh-simplify
+```
+
+The `prepare` script builds `dist/` during installation. If pnpm blocks the build step,
+add this package to `allowBuilds` in the profile's `pnpm-workspace.yaml`.
+
+From a local checkout (build it first):
+
+```bash
+git clone https://github.com/GongYuanCaiJi/dsh-simplify.git
+cd dsh-simplify && npm install        # runs prepare, produces dist/
+dsh plugin --profile <your-profile> add ../dsh-simplify
 ```
 
 ## 🚀 Usage
