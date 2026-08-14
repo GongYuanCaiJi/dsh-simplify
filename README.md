@@ -33,10 +33,12 @@
   bash  npm test              → 1 pass, 0 fail
 ```
 
-agent 的总结会明确说明范围外的行为什么不动：
+agent 的总结会明确说明范围外的行为什么不动（示意）：
 
-> Removed the intermediate variable `d`… Both edits stayed strictly within the
-> listed changed line ranges… the test suite passes (1 pass, 0 fail).
+```
+Removed the intermediate variable `d`… Both edits stayed strictly within the
+listed changed line ranges… the test suite passes (1 pass, 0 fail).
+```
 
 没有任何改动时：
 
@@ -48,14 +50,18 @@ No changed files found. Specify file paths or make some changes first.
 ## 📦 安装
 
 ```bash
-dsh plugin --profile <你的 profile> add dsh-simplify
+dsh plugin --profile <你的 profile> add github:GongYuanCaiJi/dsh-simplify
 ```
 
-从本地目录安装：
+安装时会通过 `prepare` 脚本自动构建 `dist/`。若 pnpm 拦下构建步骤，在 profile 的
+`pnpm-workspace.yaml` 里把本包加进 `allowBuilds`。
+
+从本地目录安装（需要先自行构建）：
 
 ```bash
 git clone https://github.com/GongYuanCaiJi/dsh-simplify.git
-dsh plugin --profile <你的 profile> add ./dsh-simplify
+cd dsh-simplify && npm install        # 触发 prepare，产出 dist/
+dsh plugin --profile <你的 profile> add ../dsh-simplify
 ```
 
 ## 🚀 用法
@@ -81,12 +87,27 @@ dsh plugin --profile <你的 profile> add ./dsh-simplify
 
 </details>
 
+## 🛠 开发
+
+```bash
+npm install      # 触发 prepare，产出 dist/
+npm test         # 构建后跑单元测试
+```
+
+`tools/verify-driver/` 是仓库内的验收工具（不随包发布）：它把一条 slash 命令通过真正的
+`commands.execute` 接缝跑完一整轮，用来做端到端验证。
+
+```bash
+dsh --profile <你的 profile> --patch tools/verify-driver/patch.yml "/simplify"
+```
+
 ## 📄 License
 
 MIT。上游 [`pi-simplify`](https://github.com/MattDevy/pi-extensions/tree/main/packages/pi-simplify)
 `Copyright (c) 2026 Matt Devy`，本移植 `Copyright (c) 2026 GongYuanCaiJi`。见 [LICENSE](./LICENSE)。
 
-感谢 [MattDevy/pi-extensions](https://github.com/MattDevy/pi-extensions) 的原作者。
+感谢 [MattDevy/pi-extensions](https://github.com/MattDevy/pi-extensions) 的原作者 ——
+如果这个插件对你有用，**也请去给[上游仓库](https://github.com/MattDevy/pi-extensions)点个 star**。
 
 ---
 
